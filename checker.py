@@ -46,7 +46,8 @@ def main():
     if seats is None:
         return
 
-    if seats > 0 and not state["alerted"]:
+   if True:
+
         send_telegram(f"🎉 Seat Available!\n{COURSE_CODE} Section {SECTION}\nSeats: {seats}")
         state["alerted"] = True
 
