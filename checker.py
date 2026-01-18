@@ -1,34 +1,19 @@
 import requests
 from bs4 import BeautifulSoup
 import os
-import json
 
 BOT_TOKEN = os.getenv("8069792519:AAG7U4gQ9TFaP4eKsFNtTHwc1NdU1_DVJ0w")
 CHAT_ID = os.getenv("1356464009")
 
 URL = "https://rds4.northsouth.ac.bd/index.php/offeredcourses"
-
 COURSE_CODE = "CSE299"
 SECTION = "17"
-STATE_FILE = "state.json"
 
 
 def send_telegram(msg):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-    requests.post(url, data={"chat_id": CHAT_ID, "text": msg})
-
-
-def load_state():
-    try:
-        with open(STATE_FILE, "r") as f:
-            return json.load(f)
-    except:
-        return {"alerted": False}
-
-
-def save_state(state):
-    with open(STATE_FILE, "w") as f:
-        json.dump(state, f)
+    r = requests.post(url, data={"chat_id": CHAT_ID, "text": msg})
+    print("Telegram response:", r.text)
 
 
 def check_seat():
@@ -41,32 +26,22 @@ def check_seat():
             continue
 
         if cols[0] == COURSE_CODE and cols[1] == SECTION:
-            try:
-                return int(cols[5])
-            except:
-                return 0
+            return int(cols[5])
 
     return None
 
 
 def main():
-    state = load_state()
+    print("Bot token loaded:", BOT_TOKEN is not None)
+    print("Chat ID loaded:", CHAT_ID is not None)
+
     seats = check_seat()
+    print("Seats found:", seats)
 
-    if seats is None:
-        return
-
-    # --- Normal Alert Logic ---
-    if TRY:
-        send_telegram(
-            f"🎉 Seat Available!\n{COURSE_CODE} Section {SECTION}\nSeats: {seats}"
-        )
-        state["alerted"] = True
-
-    if seats == 0:
-        state["alerted"] = False
-
-    save_state(state)
+    # ---- Force test message ----
+    send_telegram(
+        f"✅ Bot is working!\n{COURSE_CODE} Section {SECTION}\nSeats: {seats}"
+    )
 
 
 if __name__ == "__main__":
