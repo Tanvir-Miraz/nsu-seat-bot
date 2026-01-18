@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 import os
 import json
 
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-CHAT_ID = os.getenv("CHAT_ID")
+BOT_TOKEN = os.getenv("8069792519:AAG7U4gQ9TFaP4eKsFNtTHwc1NdU1_DVJ0w")
+CHAT_ID = os.getenv(1356464009)
 
 URL = "https://rds4.northsouth.ac.bd/index.php/offeredcourses"
 
