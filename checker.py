@@ -57,7 +57,7 @@ def main():
         return
 
     # --- Normal Alert Logic ---
-    if seats > 0 and not state["alerted"]:
+    if TRY:
         send_telegram(
             f"🎉 Seat Available!\n{COURSE_CODE} Section {SECTION}\nSeats: {seats}"
         )
